@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  postgres:
+    build:
+      context: ./docker/postgres
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5433:5432" # Expose PostgreSQL on host port 5433
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3.12-management # Fixed RabbitMQ version
+    container_name: rabbitmq-container
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    ports:
+      - "5672:5672" # RabbitMQ (AMQP)
+      - "15672:15672" # RabbitMQ Management UI
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
