@@ -1,0 +1,16 @@
+@startuml
+left to right direction
+
+actor "Usuario" as u
+
+package Sistema {
+    usecase "Cadastrar prefeitura" as cp
+    usecase "Cadastrar grupo de prefeitura" as cgp
+    usecase "Gerar relatórios de arrecadações" as gra
+}
+
+u --> cp
+u --> cgp
+u --> gra
+
+@enduml
