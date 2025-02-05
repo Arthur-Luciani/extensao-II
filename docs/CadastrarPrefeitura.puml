@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor Usuario as u
+participant "Sistema" as s
+participant "API Banco do Brasil" as api
+database "Banco de Dados" as db
+
+u -> s: Buscar prefeituras por palavra-chave
+s -> api: Requisitar lista de prefeituras
+api -> s: Retornar lista de prefeituras
+s -> u: Exibir lista de prefeituras
+u -> s: Selecionar prefeitura desejada
+s -> db: Salvar prefeitura selecionada
+
+
+@enduml
