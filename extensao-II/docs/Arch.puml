@@ -1,0 +1,24 @@
+@startuml
+
+actor User
+
+rectangle "API" as API
+queue "Raw Data Topic" as RawTopic
+rectangle "Kafka Streams (Normalization)" as Streams
+queue "Normalized Data Topic" as NormalizedTopic
+component "API Consumer" as Consumer
+component "Kafka Producer" as Producer
+component "Kafka Consumer (Batch Insert)" as DBWriter
+database "Database" as DB
+
+User --> Consumer : Requests Data
+Consumer --> API : Fetch Data
+API --> Consumer : Returns JSON List
+Consumer --> Producer : Sends to Kafka
+Producer --> RawTopic : Publish Message
+RawTopic --> Streams : Process & Normalize
+Streams --> NormalizedTopic : Publish Normalized Data
+NormalizedTopic --> DBWriter : Consume Batch
+DBWriter --> DB : Batch Insert
+
+@enduml

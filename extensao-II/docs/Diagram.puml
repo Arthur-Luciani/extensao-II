@@ -1,0 +1,30 @@
+@startuml
+skinparam componentStyle rectangle
+
+package "Spring Boot Application" {
+    [ExtensaoIiApplication] <<Component>>
+    [BBClient] <<Component>>
+    [UserService] <<Component>>
+    [OrderService] <<Component>>
+}
+
+package "Database" {
+    [PostgreSQL] <<Component>>
+}
+
+package "Message Broker" {
+    [RabbitMQ] <<Component>>
+}
+
+package "Streams" {
+    [Kafka] <<Component>>
+}
+
+[ExtensaoIiApplication] --> [BBClient] : Uses
+[ExtensaoIiApplication] --> [PostgreSQL] : Connects
+[ExtensaoIiApplication] --> [RabbitMQ] : Connects
+[ExtensaoIiApplication] --> [UserService] : Calls
+[ExtensaoIiApplication] --> [OrderService] : Calls
+[ExtensaoIiApplication] --> [Kafka] : Publishes/Consumes
+
+@enduml
