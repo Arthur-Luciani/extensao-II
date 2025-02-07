@@ -1,0 +1,61 @@
+@startuml
+
+/'Prefeitura'/
+entity "prefeitura" {
+    * id : UUID
+    --
+    * nome : String
+}
+
+entity "prefeitura_populacao" {
+    * id : UUID
+    --
+    * prefeitura_id : UUID
+    * populacao : long
+    * ano : int
+}
+
+/'Grupo de prefeitura'/
+entity "grupo" {
+    * id : UUID
+    --
+    * nome : String
+    * descricao : String
+}
+
+entity "grupo_prefeitura" {
+    * id : UUID
+    --
+    * grupo_id : UUID
+    * prefeitura_id : UUID
+}
+
+/'Dados'/
+entity "transferencia_mensal" {
+    * id : UUID
+    --
+    * prefeitura_id : UUID
+    * mes_transferencias : Date
+    * receita_bruta : number
+    * deducao_fundeb : number
+    * receita_liquida : number
+    * dados_completos : boolean
+}
+
+entity "imposto" {
+    * id : UUID
+    --
+    * transferencia_mensal_id : UUID
+    * nome : String
+    * valor : number
+}
+"transferencia_mensal" -- "imposto"
+transferencia_mensal -- prefeitura
+
+"prefeitura" -- "prefeitura_populacao"
+
+"grupo_prefeitura" -- "grupo"
+"grupo_prefeitura" -- "prefeitura"
+
+
+@enduml

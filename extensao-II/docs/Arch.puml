@@ -1,24 +1,21 @@
 @startuml
 
-actor User
+node "System" as app
+node "API Banco do Brasil" as api
 
-rectangle "API" as API
-queue "Raw Data Topic" as RawTopic
-rectangle "Kafka Streams (Normalization)" as Streams
-queue "Normalized Data Topic" as NormalizedTopic
-component "API Consumer" as Consumer
-component "Kafka Producer" as Producer
-component "Kafka Consumer (Batch Insert)" as DBWriter
-database "Database" as DB
+queue "Raw Data Topic" as rawDataT
+queue "Normalized Data Topic" as normalizedDataT
 
-User --> Consumer : Requests Data
-Consumer --> API : Fetch Data
-API --> Consumer : Returns JSON List
-Consumer --> Producer : Sends to Kafka
-Producer --> RawTopic : Publish Message
-RawTopic --> Streams : Process & Normalize
-Streams --> NormalizedTopic : Publish Normalized Data
-NormalizedTopic --> DBWriter : Consume Batch
-DBWriter --> DB : Batch Insert
+node "Normalization Stream" as ns
+
+database "Database" as db
+
+app             ->  api : Consume
+rawDataT        <-- app
+ns              ->  rawDataT
+ns              --> normalizedDataT
+normalizedDataT ->  app
+app             --> db
+
 
 @enduml

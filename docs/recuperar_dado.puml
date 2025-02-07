@@ -1,0 +1,20 @@
+@startuml
+
+autonumber
+
+participant "System" as s #LightBlue
+participant "API Banco do Brasil" as api #Yellow
+queue "Raw Data Topic" as rawDataT #LightGreen
+participant "Normalization Stream" as ns #LightBlue
+queue "Normalized Data Topic" as normalizedDataT #LightGreen
+database "Database" as db #LightGreen
+
+s -> api : Requisitar dados
+api -> s : Retornar dados
+s -> rawDataT : Publicar dados brutos
+rawDataT -> ns : Consumir dados brutos
+ns -> normalizedDataT : Publicar dados normalizados
+normalizedDataT -> s : Consumir dados normalizados
+s -> db : Salvar dados normalizados
+
+@enduml
