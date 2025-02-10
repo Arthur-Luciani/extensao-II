@@ -1,11 +1,21 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
+node     "System"                as s
+node     "API Banco do Brasil"   as api
+queue    "Raw Data Topic"        as rawDataT
+queue    "Normalized Data Topic" as normalizedDataT
+queue    "Dead Letter Queue"     as dlq
+node     "Normalization Stream"  as ns
+database "Database"              as db
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+s               <->           api : Consume
+rawDataT        <--          s : Publish raw data
+ns              <-           rawDataT : Consume
+ns              -->          normalizedDataT : Publish normalized data
+normalizedDataT ->           s : Consume
+s               -->          db : Save on database
+dlq             <-           ns
+normalizedDataT -[hidden]--> dlq
+dlq <-> s
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
 @enduml
