@@ -1,15 +1,5 @@
 # Levatamento de Requisitos
 
-## Visão Geral
-<p>
-Este documento visa descrever o processo de levantamento
-de requisitos psara o desenvolvimento de um sistema de análise de dados de arrecadação de receitas municipais.
-</p>
-
-## Descrição do problema
-Existe uma grande dificuldade em encontrar dados atualizados e de forma organizada sobre a arrecadação de receitas municipais.
-Com isso surge a necessidade de um sistema que possa coletar, organizar e analisar esses dados para facilitar a análise acerca desses dados.
-
 ## Funcionalidades
 1. Criação de prefeituras
 2. Criação de grupos de prefeituras
@@ -49,8 +39,8 @@ Documentar funcionalidade
 #### 3.2. Comparações
 - Comparar com mês no anterior
 - Comparar com mesmo mês no ano anterior
-- Acumalado no mesmo período do ano anterior
-- Acumalado em periodo especifico (OPCIONAL)
+- Acumulado no mesmo período do ano anterior
+- Acumulado em periodo especifico (OPCIONAL)
 - Análise per capita (comparativo utilizando população) (OPCIONAL)
 
 ## Coleta de dados

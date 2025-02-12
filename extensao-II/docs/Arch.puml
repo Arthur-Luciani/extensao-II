@@ -1,21 +1,42 @@
-@startuml
+@startgantt
+Project starts 2025-03-06
+[Criar repositório e configurar serviços externos (Docker, Postgres, Kafka)] starts 2025-03-06 and lasts 1 week
+[Criar serviços e configurações (build dos projetos)] starts 2025-03-13 and lasts 1 week
+[Configurar banco de dados (configurar flyway e criar migrations para DDL do projeto)] starts 2025-03-20 and lasts 1 week
+[Criar entidades do projeto] starts 2025-03-27 and lasts 1 week
+[Criar web client da API (Banco do Brasil)] starts 2025-04-03 and lasts 1 week
+[Criar cruds de Prefeituras e grupos de prefeituras] starts 2025-04-10 and lasts 1 week
+[Criar e configurar tópicos do Kafka] starts 2025-04-17 and lasts 1 week
+[Implementar consumo da API e publicação de dados brutos] starts 2025-04-24 and lasts 1 week
+[Implementar normalização de dados] starts 2025-05-01 and lasts 2 weeks
+[Implementar a inserção dos dados normalizados na base] starts 2025-05-15 and lasts 1 week
+[Implementar geração de relatórios] starts 2025-05-22 and lasts 3 weeks
+[Implementar front end] starts 2025-06-12 and lasts 4 weeks
+[Implementar testes integrados] starts 2025-07-10 and lasts 3 weeks
 
-node "System" as app
-node "API Banco do Brasil" as api
+[Criar serviços e configurações (build dos projetos)] is colored in #FFAAAA
+[Configurar banco de dados (configurar flyway e criar migrations para DDL do projeto)] is colored in #AAFFAA
+[Criar entidades do projeto] is colored in #AAAAFF
+[Criar web client da API (Banco do Brasil)] is colored in #FFAAAA
+[Criar cruds de Prefeituras e grupos de prefeituras] is colored in #AAFFAA
+[Criar e configurar tópicos do Kafka] is colored in #AAAAFF
+[Implementar consumo da API e publicação de dados brutos] is colored in #FFAAAA
+[Implementar normalização de dados] is colored in #AAFFAA
+[Implementar a inserção dos dados normalizados na base] is colored in #AAAAFF
+[Implementar geração de relatórios] is colored in #FFAAAA
+[Implementar front end] is colored in #AAFFAA
+[Implementar testes integrados] is colored in #AAAAFF
 
-queue "Raw Data Topic" as rawDataT
-queue "Normalized Data Topic" as normalizedDataT
-
-node "Normalization Stream" as ns
-
-database "Database" as db
-
-app             ->  api : Consume
-rawDataT        <-- app
-ns              ->  rawDataT
-ns              --> normalizedDataT
-normalizedDataT ->  app
-app             --> db
-
-
-@enduml
+[Criar serviços e configurações (build dos projetos)] starts at [Criar repositório e configurar serviços externos (Docker, Postgres, Kafka)]'s end
+[Configurar banco de dados (configurar flyway e criar migrations para DDL do projeto)] starts at [Criar serviços e configurações (build dos projetos)]'s end
+[Criar entidades do projeto] starts at [Configurar banco de dados (configurar flyway e criar migrations para DDL do projeto)]'s end
+[Criar web client da API (Banco do Brasil)] starts at [Criar entidades do projeto]'s end
+[Criar cruds de Prefeituras e grupos de prefeituras] starts at [Criar web client da API (Banco do Brasil)]'s end
+[Criar e configurar tópicos do Kafka] starts at [Criar cruds de Prefeituras e grupos de prefeituras]'s end
+[Implementar consumo da API e publicação de dados brutos] starts at [Criar e configurar tópicos do Kafka]'s end
+[Implementar normalização de dados] starts at [Implementar consumo da API e publicação de dados brutos]'s end
+[Implementar a inserção dos dados normalizados na base] starts at [Implementar normalização de dados]'s end
+[Implementar geração de relatórios] starts at [Implementar a inserção dos dados normalizados na base]'s end
+[Implementar front end] starts at [Implementar geração de relatórios]'s end
+[Implementar testes integrados] starts at [Implementar front end]'s end
+@endgantt

@@ -1,12 +1,12 @@
 @startuml
 
-node     "System"                as s
-node     "API Banco do Brasil"   as api
-queue    "Raw Data Topic"        as rawDataT
-queue    "Normalized Data Topic" as normalizedDataT
-queue    "Dead Letter Queue"     as dlq
-node     "Normalization Stream"  as ns
-database "Database"              as db
+node     "System"                as s #LightBlue
+node     "API Banco do Brasil"   as api #Yellow
+queue    "Raw Data Topic"        as rawDataT #LightGreen
+queue    "Normalized Data Topic" as normalizedDataT #LightGreen
+queue    "Dead Letter Topic"     as dlq #LightGreen
+node     "Normalization Stream"  as ns #LightBlue
+database "Database"              as db #LightGreen
 
 s               <->           api : Consume
 rawDataT        <--          s : Publish raw data
@@ -14,8 +14,8 @@ ns              <-           rawDataT : Consume
 ns              -->          normalizedDataT : Publish normalized data
 normalizedDataT ->           s : Consume
 s               -->          db : Save on database
-dlq             <-           ns
+dlq             <-           ns : Publish error
 normalizedDataT -[hidden]--> dlq
-dlq <-> s
+dlq <-> s : Publish error
 
 @enduml
